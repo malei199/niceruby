@@ -1,4 +1,1 @@
 # niceruby
-# niceruby
-# niceruby
-# niceruby
