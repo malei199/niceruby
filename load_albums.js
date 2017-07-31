@@ -1,13 +1,21 @@
 var http = require('http');
 var fs = require('fs');
+<<<<<<< HEAD
 var url = require('url');
 var qs = require('querystring');
+=======
+
+>>>>>>> 1d12741607d8c6929ac84f42965c1810b85f01bd
 function load_albums_list(callback) {
     fs.readdir(
         'albums',
         function (err, files) {
             if (err) {
+<<<<<<< HEAD
                 callback(make_error('file_error', JSON.stringify(err)));
+=======
+                callback(err);
+>>>>>>> 1d12741607d8c6929ac84f42965c1810b85f01bd
                 return;
             }
             var only_dirs = [];
@@ -20,12 +28,20 @@ function load_albums_list(callback) {
                     'albums/' + files[index],
                     function (err, stats) {
                         if (err) {
+<<<<<<< HEAD
                             callback(make_error('file_error', JSON.stringify(err)));
                             return;
                         }
                         if (stats.isDirectory()) {
                             var obj = { name: files[index] }
                             only_dirs.push(obj);
+=======
+                            callback(err);
+                            return;
+                        }
+                        if (stats.isDirectory()) {
+                            only_dirs.push(files[index]);
+>>>>>>> 1d12741607d8c6929ac84f42965c1810b85f01bd
                         }
                         iterator(index + 1);
                     }
@@ -34,6 +50,7 @@ function load_albums_list(callback) {
         }
     )
 }
+<<<<<<< HEAD
 function load_album(albums_name, page, page_size, callback) {
     fs.readdir(
         "albums/" + albums_name,
@@ -209,5 +226,23 @@ function no_such_ablum() {
     return make_error('no_such_ablum', 'the specified ablum does not exist');
 }
 
+=======
+function handle_incoming_request(req, res) {
+    console.log('请求来自：' + req.method + ' ' + req.url);
+    load_albums_list(function (err, albums) {
+        if (err) {
+            res.writeHead(503, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(err) + "\n");
+            return;
+        }
+        var out = {
+            error: null,
+            data: { albums: albums }
+        };
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(out) + "\n");
+    });
+}
+>>>>>>> 1d12741607d8c6929ac84f42965c1810b85f01bd
 var s = http.createServer(handle_incoming_request);
 s.listen(1919);
