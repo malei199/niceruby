@@ -1,0 +1,12 @@
+<div id='album_list'>
+    <p>there are {{albums.length}} albums</p>
+    <ul id="albums">
+        {{#albums}}
+        <li class="album">
+            <a target="_blank" href="/v1/pages/albums/{{name}}">{{name}}</a>
+        </li>
+        {{/albums}} {{^albums}}
+        <li>sorry,木有这个相册</li>
+        {{/albums}}
+    </ul>
+</div>
