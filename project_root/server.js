@@ -1,10 +1,54 @@
+﻿var fs = require('fs');
+var path = require('path');
 var http = require('http');
-var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
+
+function handle_incoming_request(req, res) {
+    req.parsed_url = url.parse(req.url, true);
+    var core_url = req.parsed_url.pathname;
+    if (core_url.substring(0, 7) == '/pages/') {
+        serve_page(req, res);
+    } else if (core_url.substring(0, 11) == '/templates/') {
+        serve_static_file('templates/' + core_url.substring(11), res);
+    } else if (core_url.substring(0, 9) == '/content/') {
+        serve_static_file('contents/' + core_url.substring(9), res);
+    } else if (core_url == '/albums.json') {
+        handle_list_album(req, res);
+    } else if (core_url.substr(0, 7) == '/albums' && core_url.substr(core_url.length - 5) == '.json') {
+        handle_get_album(req, res);
+    } else {
+        send_failure(res, 404, invalid_resource());
+    }
+}
+
+function serve_page(req, res) {
+    var core_url = req.parsed_url.pathname;
+    var page = core_url.substring(7); //remove /pages/
+    var pages = core_url.substring(7, 13);
+    if (page == 'home') {
+
+    } else if (pages == 'albums') {
+        page = core_url.substring(7, 13);
+    } else {
+        send_failure(res, 404, invalid_resource());
+        return;
+    }
+    fs.readFile('basic.html', function (err, contents) {
+        if (err) {
+            send_failure(res, 500, err);
+            return;
+        }
+        contents = contents.toString('utf8');
+        contents = contents.replace('{{PAGE_NAME}}', page);
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(contents);
+    });
+
+}
 function load_albums_list(callback) {
     fs.readdir(
-        'albums',
+        './../albums',
         function (err, files) {
             if (err) {
                 callback(make_error('file_error', JSON.stringify(err)));
@@ -17,7 +61,7 @@ function load_albums_list(callback) {
                     return;
                 }
                 fs.stat(
-                    'albums/' + files[index],
+                    './../albums/' + files[index],
                     function (err, stats) {
                         if (err) {
                             callback(make_error('file_error', JSON.stringify(err)));
@@ -34,66 +78,22 @@ function load_albums_list(callback) {
         }
     )
 }
-function load_album(albums_name, page, page_size, callback) {
-    fs.readdir(
-        "albums/" + albums_name,
-        function (err, files) {
-            if (err) {
-                if (err.code == "ENOENT") {
-                    callback(no_such_ablum());
-                } else {
-                    callback({ error: "files_error", message: JSON.stringify(err) });
-                }
-                return;
-            }
-            var only_files = [];
-            var path = "albums/" + albums_name + "/";
-            (function iterator(index) {
-                if (index == files.length) {
-                    var ps = only_files.splice(page * page_size, page_size);
-                    var obj = {
-                        short_name: albums_name,
-                        photos: ps
-                    };
-                    callback(null, obj);
-                    return;
-                }
-                fs.stat(
-                    path + files[index],
-                    function (err, stats) {
-                        if (err) {
-                            callback(make_error("file_error", JSON.stringify(err)));
-                            return;
-                        }
-                        if (stats.isFile()) {
-                            var obj = {
-                                filename: files[index],
-                                desc: files[index]
-                            };
-                            only_files.push(obj);
-                        }
-                        iterator(index + 1)
-                    }
-                );
-            })(0);
+function serve_static_file(file, res) {
+    fs.exists(file, function (exists) {
+        if (!exists) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            var out = { error: 'not_found', message: file + '木有找到' };
+            res.end(JSON.stringify(out) + '\n');
+            return;
         }
-    )
-}
-function handle_incoming_request(req, res) {
-    console.log('请求来自：' + req.method + ' ' + req.url);
-    console.log(url.parse(req.url, true));
-    req.parsed_url = url.parse(req.url, true);
-    var core_url = req.parsed_url.pathname;
-    if (core_url == '/albums.json' && req.method.toLowerCase() == 'get') {
-        handle_list_album(req, res);
-    } else if (core_url.substr(core_url.length - 12) == '/rename.json' && req.method.toLowerCase() == 'post') {
-        handle_rename_album(req, res);
-    } else if (core_url.substr(0, 7) == '/albums' && core_url.substr(core_url.length - 5) == '.json' && req.method.toLowerCase() == 'get') {
-        handle_get_album(req, res);
-    } else {
-        send_failure(res, 404, invalid_resource());
-    }
-
+        var rs = fs.createReadStream(file);
+        rs.on('error', function (e) {
+            res.end();
+        })
+        var ct = content_type_for_path(file);
+        res.writeHead(200, { "Content_type": ct });
+        rs.pipe(res);
+    })
 }
 function handle_list_album(req, res) {
     load_albums_list(function (err, albums) {
@@ -103,6 +103,16 @@ function handle_list_album(req, res) {
         }
         send_success(res, { albums: albums });
     });
+}
+function content_type_for_path(file) {
+    var ext = path.extname(file);
+    switch (ext.toLowerCase()) {
+        case '.html': return 'text/html';
+        case '.js': return 'text/javascript';
+        case '.css': return 'text/css';
+        case '.jpg': case '.jpeg': return 'image/jpeg';
+        default: return 'text/plain';
+    }
 }
 function handle_rename_album(req, res) {
     var core_url = req.parsed_url.pathname;
@@ -161,6 +171,51 @@ function handle_rename_album(req, res) {
         }
     );
 }
+function load_album(albums_name, page, page_size, callback) {
+    fs.readdir(
+        "./../albums/" + albums_name,
+        function (err, files) {
+            if (err) {
+                if (err.code == "ENOENT") {
+                    callback(no_such_ablum());
+                } else {
+                    callback({ error: "files_error", message: JSON.stringify(err) });
+                }
+                return;
+            }
+            var only_files = [];
+            var path = "./../albums/" + albums_name + "/";
+            (function iterator(index) {
+                if (index == files.length) {
+                    var ps = only_files.splice(page * page_size, page_size);
+                    var obj = {
+                        short_name: albums_name,
+                        photos: ps
+                    };
+                    callback(null, obj);
+                    return;
+                }
+                fs.stat(
+                    path + files[index],
+                    function (err, stats) {
+                        if (err) {
+                            callback(make_error("file_error", JSON.stringify(err)));
+                            return;
+                        }
+                        if (stats.isFile()) {
+                            var obj = {
+                                filename: files[index],
+                                desc: files[index]
+                            };
+                            only_files.push(obj);
+                        }
+                        iterator(index + 1)
+                    }
+                );
+            })(0);
+        }
+    )
+}
 function handle_get_album(req, res) {
     var getp = req.parsed_url.query;
     var page_num = getp.page ? getp.page : 0;
@@ -180,7 +235,7 @@ function handle_get_album(req, res) {
             } else if (err) {
                 send_failure(res, 500, err);
             } else {
-                send_success(res, { ablum_data: album_contents });
+                send_success(res, { album_data: album_contents });
             }
         }
     )
