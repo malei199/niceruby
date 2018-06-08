@@ -1,0 +1,54 @@
+<!-- index.wxml -->
+<view class="container">
+    <view class="index_header">
+        <a class="index_header_btn btn_left">
+            <span>杭州</span>
+            <image class="jt_img" src="../../images/jt.png"></image>
+        </a>
+        <a class="index_search_box {{isNoClock==1?'noClock': ''}}">
+            <icon type="search" class="index_search_icon" size="14" color="#B2B2B2" />
+            找房产项目，上侠客通
+        </a>
+        <a class="index_header_btn btn_right">签到</a>
+    </view>
+    <view class="index_content">
+        <image class="index_slide" src="../../prd/Bitmap.png"></image>
+        <view class="index_minNav">
+            <div wx:for="{{minNavList}}" class="navList{{index}}">
+                <image src="{{item.img}}"></image>
+                <p>{{item.text}}</p>
+            </div>
+        </view>
+        <view class="index_List1">
+            <p class="index_list1_h3">
+                购房意向客户
+                <span>
+                    <em>{{list1H3}}</em>
+                    个客户待抢
+                </span>
+            </p>
+            <ul class="index_list1_ul">
+                <li wx:for="{{payList.data}}">
+                    <p class="list1_title">
+                        <span class="grade gradeStyle{{item.grade}}">
+                            {{payList.gradeName[item.grade]}}
+                        </span>
+                        {{item.title}}
+                    </p>
+                    <view class="list1_con">
+                        <span class="address">
+                            <image src="../../images/address_icon.png"></image>
+                            {{item.address}}
+                        </span>
+                        <span class="price">{{item.price}}积分抢购</span>
+                        <span class="name">
+                            <image src="../../images/phone_icon.png"></image>
+                            {{item.name + item.phone}}
+                        </span>
+                        <a class="btn">立即抢</a>
+                    </view>
+                </li>
+            </ul>
+        </view>
+    </view>
+</view>
