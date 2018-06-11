@@ -1,0 +1,20 @@
+<view class="my_index">
+    <view class="my_header">
+        <image class="face_img" src="{{faec_img}}"></image>
+        <p class="userName">{{userName}}</p>
+        <span class="assets">
+            <image src="../../images/assets_icon.png"></image>
+            {{assets}}
+        </span>
+        <a class="pay">充值</a>
+    </view>
+    <view class="my_list_btnBox">
+        <ul>
+            <li wx:for="{{btnList.data}}">
+                <image class="icon" src="{{item.img}}"></image>
+                <p class="text">{{item.text}}</p>
+                <image class="jt" src="../../images/jt_right.png"></image>
+            </li>
+        </ul>
+    </view>
+</view>

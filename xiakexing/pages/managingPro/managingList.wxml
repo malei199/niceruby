@@ -1,0 +1,30 @@
+<view class="man_pro_list">
+    <view class="man_search">
+        <a class="index_search_box">
+            <icon type="search" class="index_search_icon" size="14" color="#B2B2B2" />
+            搜索项目名称／手机号码
+        </a>
+    </view>
+    <view class="man_List">
+        <p class="man_list_header">
+            已抢
+            <em>7000</em>
+            个客户
+        </p>
+        <ul class="index_list2_ul">
+            <li wx:for="{{list.data}}">
+                <view class="list2_left">
+                    <image src="{{item.proImg}}"></image>
+                    <span class="proName">{{item.proName}} {{index}}</span>
+                    <span class="style">{{item.style}}</span>
+                </view>
+                <view class="list2_right">
+                    <p class="p_1">客户姓名：{{item.customerName}}  {{index}}</p>
+                    <p class="p_2">手机号码：{{item.phone}}</p>
+                    <p class="p_3">推广渠道：{{item.channel}}</p>
+                    <p class="p_4">项目类型：{{item.type}}</p>
+                </view>
+            </li>
+        </ul>
+    </view>
+</view>

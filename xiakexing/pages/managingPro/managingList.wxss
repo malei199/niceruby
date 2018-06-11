@@ -1,0 +1,119 @@
+.man_pro_list .man_search {
+    padding-top: 16rpx;
+    height: 72rpx;
+    background: #F4F4F4;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.man_pro_list .man_search .index_search_box {
+    margin: 0 auto;
+    display: block;
+    width: 718rpx;
+    height: 56rpx;
+    background-color: #fff;
+    border-radius: 6rpx;
+    line-height: 60rpx;
+    text-align: center;
+    color: #B2B2B2;
+    font-size: 26rpx;
+}
+
+.man_pro_list .man_search .index_search_box .index_search_icon {
+    display: inline-flex;
+    vertical-align: sub;
+}
+
+.man_pro_list .man_List .man_list_header {
+    display: block;
+    padding-left: 24rpx;
+    font-size: 24rpx;
+    color: #888;
+    line-height: 66rpx;
+    background: #F4F4F4;
+}
+
+.man_pro_list .man_List .man_list_header em {
+    color: #ED5566;
+}
+
+.man_pro_list .man_List .index_list2_ul {
+    display: block;
+    overflow: hidden;
+}
+
+.man_pro_list .man_List .index_list2_ul li {
+    margin: 0 30rpx;
+    display: block;
+    border-bottom: 1px solid #E5E5E5;
+    padding-bottom: 36rpx;
+    overflow: hidden;
+}
+
+.man_pro_list .man_List .index_list2_ul li:last-child {
+    border-bottom: none;
+}
+
+.man_pro_list .list2_left {
+    margin: 30rpx 19rpx 0 0;
+    width: 260rpx;
+    height: 196rpx;
+    position: relative;
+    float: left;
+}
+
+.man_pro_list .list2_left image {
+    width: 260rpx;
+    height: 196rpx;
+    display: block;
+}
+
+.man_pro_list .list2_left .proName {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.75);
+    font-size: 26rpx;
+    color: #353535;
+    line-height: 44rpx;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.man_pro_list .list2_left .style {
+    display: block;
+    position: absolute;
+    padding-left: 8rpx;
+    padding-right: 8rpx;
+    border-radius: 0 36rpx 36rpx 0;
+    top: 15rpx;
+    left: 0;
+    z-index: 2;
+    font-size: 20rpx;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    background: #ED5566;
+    width: 95rpx;
+    height: 36rpx;
+    line-height: 36rpx;
+}
+
+.man_pro_list .list2_right {
+    float: left;
+    width: 410rpx;
+    overflow: hidden;
+    margin-top: 30rpx;
+}
+
+.man_pro_list .list2_right p {
+    display: block;
+    color: #888;
+    font-size: 26rpx;
+    line-height: 36rpx;
+    margin-bottom: 16rpx;
+}
+
+.man_pro_list .list2_right p em {
+    color: #ED5566;
+}
