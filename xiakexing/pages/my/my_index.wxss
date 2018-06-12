@@ -61,6 +61,7 @@
 .my_index .my_list_btnBox ul {
     display: block;
     overflow: hidden;
+    margin-top: 10rpx;
 }
 
 .my_index .my_list_btnBox ul li {
@@ -71,8 +72,15 @@
     border-bottom: 1px solid #E5E5E5;
 }
 
+.my_index .my_list_btnBox ul li.botm {
+    margin-top: 20rpx;
+}
+
+.my_index .my_list_btnBox ul li {}
+
 .my_index .my_list_btnBox ul li .icon {
     float: left;
+    display: block;
     width: 56rpx;
     height: 56rpx;
     margin-left: 30rpx;
@@ -81,12 +89,67 @@
 .my_index .my_list_btnBox ul li .text {
     color: #000000;
     font-size: 34rpx;
-    line-height: 90rpx;
+    line-height: 88rpx;
 }
 
 .my_index .my_list_btnBox ul li .jt {
     float: right;
     width: 16rpx;
     height: 26rpx;
-    margin: 32rpx 0;
+    margin: 30rpx 0;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon1 {
+    width: 56rpx;
+    height: 56rpx;
+    margin-top: 17rpx;
+    margin-right: 21rpx;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon2 {
+    width: 48rpx;
+    height: 48rpx;
+    margin-left: 32rpx;
+    margin-top: 20rpx;
+    margin-right: 28rpx;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon3 {
+    width: 50rpx;
+    height: 50rpx;
+    margin-left: 34rpx;
+    margin-top: 19rpx;
+    margin-right: 24rpx;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon4 {
+    width: 56rpx;
+    height: 56rpx;
+    margin-left: 31rpx;
+    margin-top: 16rpx;
+    margin-right: 21rpx;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon5 {
+    width: 40rpx;
+    height: 45rpx;
+    margin-left: 39rpx;
+    margin-top: 22rpx;
+    margin-right: 30rpx;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon6 {
+    width: 52rpx;
+    height: 52rpx;
+    margin-left: 32rpx;
+    margin-top: 18rpx;
+    margin-right: 24rpx;
+}
+
+.my_index .my_list_btnBox ul li .icon.icon7 {
+    width: 56rpx;
+    height: 54rpx;
+    margin-left: 32rpx;
+    margin-top: 17rpx;
+    margin-right: 20rpx;
 }

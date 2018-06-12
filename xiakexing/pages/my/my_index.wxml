@@ -10,8 +10,8 @@
     </view>
     <view class="my_list_btnBox">
         <ul>
-            <li wx:for="{{btnList.data}}">
-                <image class="icon" src="{{item.img}}"></image>
+            <li wx:for="{{btnList.data}}" class="{{ index % 3 == 0?'botm':''}}">
+                <image class="icon {{item.class}}" src="{{item.img}}"></image>
                 <p class="text">{{item.text}}</p>
                 <image class="jt" src="../../images/jt_right.png"></image>
             </li>
