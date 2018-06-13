@@ -84,6 +84,8 @@
     width: 56rpx;
     height: 56rpx;
     margin-left: 30rpx;
+    margin-top: 17rpx;
+    margin-right: 21rpx;
 }
 
 .my_index .my_list_btnBox ul li .text {
@@ -106,6 +108,7 @@
     margin-right: 21rpx;
 }
 
+/* 
 .my_index .my_list_btnBox ul li .icon.icon2 {
     width: 48rpx;
     height: 48rpx;
@@ -152,4 +155,4 @@
     margin-left: 32rpx;
     margin-top: 17rpx;
     margin-right: 20rpx;
-}
+} */
